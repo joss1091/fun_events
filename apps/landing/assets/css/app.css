@@ -1,0 +1,19 @@
+/* @import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities"; */
+/* @import "../vendor/css/font-awesome.css"; */
+@import "../vendor/css/themify-icons.css";
+@import "../vendor/css/bootstrap.css";
+@import "../vendor/css/flaticon.css";
+@import "../vendor/css/swiper.min.css";
+@import "../vendor/css/owl.carousel.css";
+@import "../vendor/css/odometer-theme-default.css";
+@import "../vendor/css/nice-select.css";
+@import "../vendor/css/owl.transitions.css";
+@import "../vendor/css/odometer-theme-default.css";
+@import "../vendor/css/jquery.fancybox.css";
+@import "../vendor/css/slick.css";
+/* @import "../vendor/css/slick-theme.css"; */
+@import "../vendor/css/style.css";
+
+/* This file is for your main application CSS */

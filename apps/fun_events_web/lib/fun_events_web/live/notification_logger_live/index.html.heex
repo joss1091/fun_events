@@ -1,0 +1,40 @@
+<.header>
+  Listing Notification
+  <:actions>
+    <.link patch={~p"/notification/new"}>
+      <.button>New Notification logger</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="notification"
+  rows={@streams.notification}
+  row_click={fn {_id, notification_logger} -> JS.navigate(~p"/notification/#{notification_logger}") end}
+>
+  <:action :let={{_id, notification_logger}}>
+    <div class="sr-only">
+      <.link navigate={~p"/notification/#{notification_logger}"}>Show</.link>
+    </div>
+    <.link patch={~p"/notification/#{notification_logger}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, notification_logger}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: notification_logger.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="notification_logger-modal" show on_cancel={JS.patch(~p"/notification")}>
+  <.live_component
+    module={FunEventsWeb.NotificationLoggerLive.FormComponent}
+    id={@notification_logger.id || :new}
+    title={@page_title}
+    action={@live_action}
+    notification_logger={@notification_logger}
+    patch={~p"/notification"}
+  />
+</.modal>

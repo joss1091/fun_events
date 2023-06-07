@@ -1,0 +1,35 @@
+<.header>
+  Guest <%= @guest.id %>
+  <:subtitle>This is a guest record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/guests/#{@guest}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit guest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @guest.name %></:item>
+  <:item title="Last name"><%= @guest.last_name %></:item>
+  <:item title="Adult max"><%= @guest.adult_max %></:item>
+  <:item title="Minor max"><%= @guest.minor_max %></:item>
+  <:item title="Adult confirmed"><%= @guest.adult_confirmed %></:item>
+  <:item title="Minor confirmed"><%= @guest.minor_confirmed %></:item>
+  <:item title="Date response"><%= @guest.date_response %></:item>
+  <:item title="State"><%= @guest.state %></:item>
+  <:item title="Last notification date"><%= @guest.last_notification_date %></:item>
+  <:item title="Event"><%= @guest.event_id %></:item>
+</.list>
+
+<.back navigate={~p"/guests"}>Back to guests</.back>
+
+<.modal :if={@live_action == :edit} id="guest-modal" show on_cancel={JS.patch(~p"/guests/#{@guest}")}>
+  <.live_component
+    module={FunEventsWeb.GuestLive.FormComponent}
+    id={@guest.id}
+    title={@page_title}
+    action={@live_action}
+    guest={@guest}
+    patch={~p"/guests/#{@guest}"}
+  />
+</.modal>

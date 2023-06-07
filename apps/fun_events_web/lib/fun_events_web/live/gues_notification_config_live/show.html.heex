@@ -1,0 +1,29 @@
+<.header>
+  Gues notification config <%= @gues_notification_config.id %>
+  <:subtitle>This is a gues_notification_config record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/guest_notification_configs/#{@gues_notification_config}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit gues_notification_config</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Type"><%= @gues_notification_config.type %></:item>
+  <:item title="To"><%= @gues_notification_config.to %></:item>
+  <:item title="Country"><%= @gues_notification_config.country %></:item>
+  <:item title="Is default"><%= @gues_notification_config.is_default %></:item>
+</.list>
+
+<.back navigate={~p"/guest_notification_configs"}>Back to guest_notification_configs</.back>
+
+<.modal :if={@live_action == :edit} id="gues_notification_config-modal" show on_cancel={JS.patch(~p"/guest_notification_configs/#{@gues_notification_config}")}>
+  <.live_component
+    module={FunEventsWeb.GuesNotificationConfigLive.FormComponent}
+    id={@gues_notification_config.id}
+    title={@page_title}
+    action={@live_action}
+    gues_notification_config={@gues_notification_config}
+    patch={~p"/guest_notification_configs/#{@gues_notification_config}"}
+  />
+</.modal>

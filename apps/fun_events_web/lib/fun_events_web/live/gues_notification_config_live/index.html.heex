@@ -1,0 +1,44 @@
+<.header>
+  Listing Guest notification configs
+  <:actions>
+    <.link patch={~p"/guest_notification_configs/new"}>
+      <.button>New Gues notification config</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="guest_notification_configs"
+  rows={@streams.guest_notification_configs}
+  row_click={fn {_id, gues_notification_config} -> JS.navigate(~p"/guest_notification_configs/#{gues_notification_config}") end}
+>
+  <:col :let={{_id, gues_notification_config}} label="Type"><%= gues_notification_config.type %></:col>
+  <:col :let={{_id, gues_notification_config}} label="To"><%= gues_notification_config.to %></:col>
+  <:col :let={{_id, gues_notification_config}} label="Country"><%= gues_notification_config.country %></:col>
+  <:col :let={{_id, gues_notification_config}} label="Is default"><%= gues_notification_config.is_default %></:col>
+  <:action :let={{_id, gues_notification_config}}>
+    <div class="sr-only">
+      <.link navigate={~p"/guest_notification_configs/#{gues_notification_config}"}>Show</.link>
+    </div>
+    <.link patch={~p"/guest_notification_configs/#{gues_notification_config}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, gues_notification_config}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: gues_notification_config.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="gues_notification_config-modal" show on_cancel={JS.patch(~p"/guest_notification_configs")}>
+  <.live_component
+    module={FunEventsWeb.GuesNotificationConfigLive.FormComponent}
+    id={@gues_notification_config.id || :new}
+    title={@page_title}
+    action={@live_action}
+    gues_notification_config={@gues_notification_config}
+    patch={~p"/guest_notification_configs"}
+  />
+</.modal>

@@ -1,0 +1,50 @@
+<.header>
+  Listing Guests
+  <:actions>
+    <.link patch={~p"/guests/new"}>
+      <.button>New Guest</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="guests"
+  rows={@streams.guests}
+  row_click={fn {_id, guest} -> JS.navigate(~p"/guests/#{guest}") end}
+>
+  <:col :let={{_id, guest}} label="Name"><%= guest.name %></:col>
+  <:col :let={{_id, guest}} label="Last name"><%= guest.last_name %></:col>
+  <:col :let={{_id, guest}} label="Adult max"><%= guest.adult_max %></:col>
+  <:col :let={{_id, guest}} label="Minor max"><%= guest.minor_max %></:col>
+  <:col :let={{_id, guest}} label="Adult confirmed"><%= guest.adult_confirmed %></:col>
+  <:col :let={{_id, guest}} label="Minor confirmed"><%= guest.minor_confirmed %></:col>
+  <:col :let={{_id, guest}} label="Date response"><%= guest.date_response %></:col>
+  <:col :let={{_id, guest}} label="State"><%= guest.state %></:col>
+  <:col :let={{_id, guest}} label="Last notification date"><%= guest.last_notification_date %></:col>
+  <:col :let={{_id, guest}} label="Event"><%= guest.event_id %></:col>
+  <:action :let={{_id, guest}}>
+    <div class="sr-only">
+      <.link navigate={~p"/guests/#{guest}"}>Show</.link>
+    </div>
+    <.link patch={~p"/guests/#{guest}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, guest}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: guest.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="guest-modal" show on_cancel={JS.patch(~p"/guests")}>
+  <.live_component
+    module={FunEventsWeb.GuestLive.FormComponent}
+    id={@guest.id || :new}
+    title={@page_title}
+    action={@live_action}
+    guest={@guest}
+    patch={~p"/guests"}
+  />
+</.modal>
