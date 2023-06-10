@@ -39,12 +39,11 @@ jobs:
       shell: bash
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_PASSWORD }}
-     - name: listing variables pass
+    - name: listing variables pass
       run: echo $DOCKER_PASSWORD
       shell: bash
       env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }} 
 
 
       
