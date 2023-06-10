@@ -50,5 +50,5 @@ jobs:
         name: joss1091/fun_events
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
-        tags: "latest,${{ github.ref_name }}",
+        tags: "latest,${{ github.ref_name }}"
         snapshot: true
