@@ -54,8 +54,8 @@ COPY apps/fun_events_web/priv ./apps/fun_events_web/priv
 
 COPY apps apps
 
-COPY apps/landing/assets ./apps/landing/assets
-COPY apps/fun_events_web/assets ./apps/fun_events_web/assets
+COPY apps/landing/assets apps/landing/assets
+COPY apps/fun_events_web/assets apps/fun_events_web/assets
 
 # compile assets
 RUN cd apps/landing && mix assets.deploy
