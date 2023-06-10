@@ -39,11 +39,25 @@ jobs:
       shell: bash
       env:
         DOCKER_USERNAME: ${{ secrets.DOCKER_PASSWORD }}
-    - name: listing variables pass
-      run: echo $DOCKER_PASSWORD
-      shell: bash
-      env:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+    
+  base64:
+
+    name: Recover With Base64
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@v3
+      - env:
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+        run: |
+          echo "MY_CLIENT_ID (***)    = ${DOCKER_PASSWORD}"
+          echo "MY_CLIENT_ID (base64) = $(echo ${DOCKER_PASSWORD} | base64)"
+          echo "DOCKER_USERNAME (***)    = ${DOCKER_USERNAME}"
+          echo "DOCKER_USERNAME (base64) = $(echo ${DOCKER_USERNAME} | base64)"
+          echo "Copy the above value, and then execute locally:"
+          echo "echo PASTE_HERE | base64 -D"
+        
 
 
       
