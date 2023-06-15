@@ -61,7 +61,9 @@ COPY apps/fun_events_web/assets apps/fun_events_web/assets
 # compile assets
 RUN ls apps
 RUN ls apps/landing
+RUN cd apps/fun_events_web && mix deps.get
 RUN cd apps/fun_events_web && mix assets.deploy
+RUN cd apps/landing && mix deps.get
 RUN cd apps/landing && mix assets.landing.deploy
 
 
