@@ -76,7 +76,8 @@ RUN mix compile
 # Changes to config/runtime.exs don't require recompiling the code
 COPY config/runtime.exs config/
 
-COPY rel rel
+# COPY apps/fun_events_web/rel apps/fun_events_web/rel
+# COPY apps/landing/rel apps/landing/rel
 RUN mix release
 
 # start a new build stage so that the final image will only contain
