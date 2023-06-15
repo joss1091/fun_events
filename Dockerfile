@@ -45,12 +45,12 @@ RUN mkdir config
 COPY config/config.exs config/${MIX_ENV}.exs config/
 RUN mix deps.compile
 
-COPY apps/landing/mix.exs ./apps/landing/mix.exs 
-COPY apps/fun_events/mix.exs ./apps/fun_events/mix.exs
-COPY apps/fun_events_web/mix.exs ./apps/fun_events_web/mix.exs
+COPY apps/landing/mix.exs apps/landing/mix.exs 
+COPY apps/fun_events/mix.exs apps/fun_events/mix.exs
+COPY apps/fun_events_web/mix.exs apps/fun_events_web/mix.exs
 
-COPY apps/landing/priv ./apps/landing/priv
-COPY apps/fun_events_web/priv ./apps/fun_events_web/priv
+COPY apps/landing/priv apps/landing/priv
+COPY apps/fun_events_web/priv apps/fun_events_web/priv
 
 COPY apps apps
 
