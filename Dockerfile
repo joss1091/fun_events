@@ -64,7 +64,7 @@ RUN ls apps/landing
 RUN cd apps/fun_events_web && mix deps.get
 RUN cd apps/fun_events_web && mix assets.deploy
 RUN cd apps/landing && mix deps.get
-RUN cd apps/landing && mix assets.landing.deploy
+RUN cd apps/landing && mix assets.deploy
 
 
 COPY apps apps
