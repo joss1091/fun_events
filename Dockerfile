@@ -52,14 +52,20 @@ COPY apps/fun_events_web/mix.exs apps/fun_events_web/mix.exs
 COPY apps/landing/priv apps/landing/priv
 COPY apps/fun_events_web/priv apps/fun_events_web/priv
 
-COPY apps apps
+
 
 COPY apps/landing/assets apps/landing/assets
 COPY apps/fun_events_web/assets apps/fun_events_web/assets
 
+
 # compile assets
+RUN ls apps
+RUN ls apps/landing
 RUN cd apps/landing && mix assets.deploy
 RUN cd apps/fun_events_web && mix assets.deploy
+
+COPY apps apps
+
 
 # Compile the release
 RUN mix compile

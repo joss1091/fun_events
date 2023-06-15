@@ -21,7 +21,8 @@ config :landing, Landing.Endpoint,
     layout: false
   ],
   pubsub_server: Landing.PubSub,
-  live_view: [signing_salt: "7Se4gAqf"]
+  live_view: [signing_salt: "7Se4gAqf"],
+  server: true
 
 
 # Configure Mix tasks and generators
