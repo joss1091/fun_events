@@ -102,7 +102,8 @@ ENV MIX_ENV="prod"
 
 # Only copy the final release from the build stage
 COPY --from=builder --chown=nobody:root /app/_build/${MIX_ENV}/rel/fun_events_umbrella ./
-
+RUN ls 
+RUN ls rel
 USER nobody
 
 # CMD ["/app/bin/server"]
