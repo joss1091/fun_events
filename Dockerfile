@@ -1,5 +1,5 @@
 # ---- Build Stage ----
-FROM bitwalker/alpine-elixir:1.14 AS builder
+FROM hexpm/elixir:1.14.0-erlang-24.1.7-alpine-3.14.2 AS builder
 RUN apk add --no-cache --update busybox-extras bash openssl curl make g++ npm yarn
 
 
