@@ -13,10 +13,13 @@ RUN mix local.hex --force && \
     mix local.rebar --force
 
 COPY mix.exs mix.lock ./
-
-
+RUN mix deps.get
 RUN mkdir config
+
+
 COPY config/config.exs config/${MIX_ENV}.exs config/
+RUN mix deps.compile
+
 COPY apps ./apps
 COPY mix.exs .
 COPY mix.lock .
@@ -30,13 +33,12 @@ COPY apps/fun_events_web/priv apps/fun_events_web/priv
 
 COPY apps/landing/assets apps/landing/assets
 COPY apps/fun_events_web/assets apps/fun_events_web/assets
+
+
+ 
+RUN mix compile
+RUN mix release
 COPY config/runtime.exs config/
-
-
-RUN mix deps.get && \
-    mix deps.compile && \
-    mix release
-
 RUN cd apps/fun_events_web && mix deps.get
 RUN cd apps/fun_events_web && mix assets.deploy
 RUN cd apps/landing && mix deps.get
