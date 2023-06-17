@@ -35,14 +35,18 @@ COPY apps/landing/assets apps/landing/assets
 COPY apps/fun_events_web/assets apps/fun_events_web/assets
 
 
- 
-RUN mix compile
-RUN mix release
-COPY config/runtime.exs config/
 RUN cd apps/fun_events_web && mix deps.get
-RUN cd apps/fun_events_web && mix assets.deploy
 RUN cd apps/landing && mix deps.get
+RUN cd apps/fun_events_web && mix assets.deploy
+
 RUN cd apps/landing && mix assets.deploy
+
+RUN mix compile
+
+COPY config/runtime.exs config/
+RUN mix release
+
+
 
 # ---- Application Stage ----
 FROM alpine:3.13
