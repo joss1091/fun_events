@@ -49,7 +49,7 @@ RUN mix release
 
 
 # ---- Application Stage ----
-FROM hexpm/elixir:1.14.0-erlang-24.1.7-alpine-3.14.2
+FROM alpine:3.16
 RUN apk add --no-cache --update busybox-extras bash openssl curl  
 
 
