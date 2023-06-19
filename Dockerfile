@@ -1,5 +1,5 @@
 # ---- Build Stage ----
-FROM hexpm/elixir:1.14.0-erlang-24.1.7-alpine-3.14.2 AS builder
+FROM bitwalker/alpine-elixir:1.12.3 AS builder
 RUN apk add --no-cache --update busybox-extras bash openssl curl make g++ npm yarn
 
 
@@ -49,7 +49,7 @@ RUN mix release
 
 
 # ---- Application Stage ----
-FROM alpine:3.13
+FROM hexpm/elixir:1.14.0-erlang-24.1.7-alpine-3.14.2
 RUN apk add --no-cache --update busybox-extras bash openssl curl  
 
 
