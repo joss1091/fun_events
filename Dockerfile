@@ -1,6 +1,12 @@
 # ---- Build Stage ----
-FROM bitwalker/alpine-elixir:1.14 AS builder
-RUN apk add --no-cache --update busybox-extras bash openssl curl make g++ npm yarn
+FROM hexpm/elixir:1.14.0-erlang-24.1.7-alpine-3.14.2 AS builder
+RUN apk add --no-cache --update busybox-extras build-base git python3 bash openssl curl make g++ npm yarn
+
+
+
+
+
+WORKDIR /app
 
 
 LABEL app="fun-events-builder"
@@ -50,7 +56,7 @@ RUN mix release
 
 # ---- Application Stage ----
 FROM alpine:3.16
-RUN apk add --no-cache --update busybox-extras bash openssl curl  
+RUN apk add --no-cache --update busybox-extras bash openssl curl libstdc++ ncurses-libs
 
 
 
@@ -64,6 +70,6 @@ LABEL VERSION=$VERSION
 
 WORKDIR /app
 
-COPY --from=builder /opt/app/_build .
+COPY --from=builder /app/_build .
 
 # CMD ["/app/prod/rel/reservator/bin/reservator", "start"]
