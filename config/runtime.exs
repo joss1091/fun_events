@@ -27,7 +27,11 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("LANDING_PORT") || "4000")
     ],
     secret_key_base: secret_key_base,
-    server: true
+    server: true,
+    check_origin: System.get_env("LANDING_CHECK_ORIGIN", "") |> String.split(","),
+    live_view: [
+      signing_salt: System.get_env("LANDING_LIVE_VIEW_SALT")
+    ]
 
   # ## Using releases
   #
@@ -124,7 +128,11 @@ if config_env() == :prod do
       port: String.to_integer(System.get_env("ADMIN_PORT") || "4000")
     ],
     secret_key_base: secret_key_base,
-    server: true
+    server: true,
+    check_origin: System.get_env("ADMIN_CHECK_ORIGIN", "") |> String.split(","),
+    live_view: [
+      signing_salt: System.get_env("ADMIN_LIVE_VIEW_SALT")
+    ]
 
   # ## Using releases
   #
