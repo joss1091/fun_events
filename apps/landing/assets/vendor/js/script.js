@@ -1,7 +1,7 @@
 
 import jquery from "./jquery"
 import Swiper from "./swiper"
-import WOW from "./wow"
+// import WOW from "./wow"
 import "./jquery.dlmenu"
 import "./jquery-plugin-collection"
 
@@ -281,7 +281,7 @@ window.$ = jquery;
             $('.preloader').delay(100).fadeOut(500, function() {
 
                 //active wow
-                // wow.init();
+                wow.init();
 
 
 
@@ -979,7 +979,7 @@ window.$ = jquery;
     ==========================================================================*/
         $(window).on('load', function() {
 
-            preloader();  
+            // preloader();  
 
             sortingGallery();
             
