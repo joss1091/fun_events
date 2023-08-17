@@ -2,6 +2,7 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
   use FunEventsWeb, :live_component
 
   alias FunEvents.Guests
+  alias FunEvents.Guests.Guest
 
   @impl true
   def render(assigns) do
@@ -23,12 +24,8 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
         <.input field={@form[:last_name]} type="text" label="Last name" />
         <.input field={@form[:adult_max]} type="number" label="Adult max" />
         <.input field={@form[:minor_max]} type="number" label="Minor max" />
-        <.input field={@form[:adult_confirmed]} type="number" label="Adult confirmed" />
-        <.input field={@form[:minor_confirmed]} type="number" label="Minor confirmed" />
-        <.input field={@form[:date_response]} type="datetime-local" label="Date response" />
-        <.input field={@form[:state]} type="text" label="State" />
-        <.input field={@form[:last_notification_date]} type="datetime-local" label="Last notification date" />
-        <.input field={@form[:event_id]} type="number" label="Event" />
+        <.input field={@form[:phone]} type="text" label="Minor max" />
+        <.input field={@form[:state]} type="text" label="Minor max" />
         <:actions>
           <.button phx-disable-with="Saving...">Save Guest</.button>
         </:actions>
@@ -96,4 +93,8 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
   end
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
+
+  def generate_token(%Guest{} = guest) do
+    Phoenix.Token.sign(Landing.Endpoint, "ju7nHQeQCEIGe7W7vhHLm2YkhyiNil2Fo3fW4TaslkwBTytzzzNmphz9uocma/n0", %{id: 1}, max_age: 86400 * 80)
+  end
 end

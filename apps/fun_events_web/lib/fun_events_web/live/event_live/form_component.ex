@@ -19,7 +19,7 @@ defmodule FunEventsWeb.EventLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:date]} type="date" label="Date" />
+        <.input field={@form[:date]} type="datetime-local" label="Date" />
         <.input field={@form[:name]} type="text" label="Name" />
         <.input field={@form[:status]} type="text" label="Status" />
         <.input field={@form[:time_zone]} type="text" label="Time zone" />

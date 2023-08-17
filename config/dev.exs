@@ -17,7 +17,8 @@ config :landing, Landing.Endpoint,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:landing, ~w(--sourcemap=inline --watch)]},
     tailwind: {Tailwind, :install_and_run, [:landing, ~w(--watch)]}
-  ]
+  ],
+  secret_key_base: "iLv17t3hPgTY7If2OQ8Boys/IXH2utkHSBFcmfsCov/TIG8LpZqo/FPFv6OKkTlF"
 
 # ## SSL Support
 #

@@ -79,7 +79,7 @@
                         <div class="slide-inner slide-bg-image" data-background="https://ik.imagekit.io/jl7z41ynx/_ROB2378.jpg?updatedAt=1691253351532">
                         </div> <!-- end slide-inner --> 
                     </div> <!-- end swiper-slide -->
-
+                        
                     <div class="swiper-slide">
                         <div class="slide-inner slide-bg-image" data-background="https://ik.imagekit.io/jl7z41ynx/_ROB2599.jpg?updatedAt=1691256860870">
                         </div> <!-- end slide-inner --> 
@@ -144,14 +144,22 @@
         </section>
         <!-- end couple-section -->
         <!-- start wpo-video-section -->
+        
         <section class="wpo-video-section-s2">
             <h2 class="hidden">some</h2>
             <div class="wpo-video-item">
                 <div class="wpo-video-img">
-                    <img src="/images/cta2.jpg" alt="">
-                    <a href="https://www.youtube.com/embed/teLhLLlhfzc" class="video-btn" data-type="iframe"><i
+                    <img src="https://ik.imagekit.io/jl7z41ynx/video_banner.jpg?updatedAt=1692316386986" alt="">
+                    <a href="#single-video" class="video-btn" data-type="video"><i
                             class="fi flaticon-play"></i></a>
+
+                          <div id="single-video" class="fancybox-video" style="display: none;">
+                            <video controls="" width="100%" height="auto">
+                                <source src="https://ik.imagekit.io/jl7z41ynx/anios.mp4?updatedAt=1692315907352" type="video/mp4">   
+                            </video>
+                            </div>
                 </div>
+                
             </div>
         </section>
         <!-- end wpo-video-section-->
@@ -331,7 +339,7 @@
                                 <div class="wpo-pricing-item">
                                     <div class="wpo-pricing-top">
                                         <div class="wpo-pricing-img">
-                                            <img src="/images//pricing/1.png" alt="">
+                                            <img src="https://ik.imagekit.io/jl7z41ynx/dress_code.jpg?updatedAt=1691626735783" alt="">
                                         </div>
                                         <div class="wpo-pricing-text">
                                             <h4>Codigo de vestir</h4>
@@ -340,7 +348,7 @@
                                     <div class="wpo-pricing-bottom">
                                         <div class="wpo-pricing-bottom-text">
                                             <ul>
-                                                <li>Formal</li>
+                                                <li>Como te sientas cómodo y elegante</li>
                                                 
                                             </ul>
                                         </div>
@@ -375,95 +383,124 @@
             <!-- start wpo-pricing-section -->
         
             <section class="wpo-banner-section ">
-                <h1 style="font-size: 90px">#Karen&Joss</h1>
+                <h2 class="ig-title">#Karen&Joss</h2>
                 <p>Comparte este dia en instagram</p>
             </section>
         <!-- start of wpo-contact-section -->
-        <section class="wpo-contact-section section-padding " id="RSVP">
-            <div class="container">
-                <div class="wpo-contact-section-wrapper">
-                    <div class="wpo-contact-form-area">
-                        <div class="wpo-section-title-s2">
-                            <div class="section-title-simg">
-                                <img src="/images/section-title2.png" alt="">
+        <%= if !is_nil(@guest) do %>
+            <section class="wpo-contact-section section-padding " id="RSVP">
+                <div class="container">
+                    <div class="wpo-contact-section-wrapper">
+                        <%= if @guest.state != "confirmed" do %>
+                            <div class="wpo-contact-form-area">
+                                <div class="wpo-section-title-s2">
+                                    <div class="section-title-simg">
+                                        <img src="/images/section-title2.png" alt="">
+                                    </div>
+                                    <h2>¡¡Confirma tu asistencia!!</h2>
+                                    <div class="section-title-img">
+                                        <div class="round-ball"></div>
+                                    </div>
+                                </div>
+                                <.simple_form
+                                    for={@form}
+                                    id="confirm-guest-form"
+                                    phx-change="validate"
+                                    phx-submit="save"
+                                >
+                                    <div class="wpo-section-title">
+                                    <p>Para:</p>
+                                    <h2><%= "#{@guest.name} #{@guest.last_name}" %></h2>
+                                    </div>
+                                    <.input field={@form[:adult_confirmed]} type="select" options={1..@guest.adult_max} label="Adultos" class="form-control" />
+                                    <div class="submit-area">
+                                            <button type="submit" class="theme-btn-s3">Enviar confirmación</button>
+                                            <div id="c-loader">
+                                                <i class="ti-reload"></i>
+                                            </div>
+                                        </div>
+                                </.simple_form>
+                            
+                                <div class="border-style"></div>
                             </div>
-                            <h2>¡¡Confirma tu asistencia!!</h2>
-                            <div class="section-title-img">
-                                <div class="round-ball"></div>
+                        <% else %>
+                            <div class="wpo-contact-form-area">
+                                <div class="wpo-section-title-s2">
+                                    <div class="section-title-simg">
+                                        <img src="/images/section-title2.png" alt="">
+                                    </div>
+                                    <h2>¿Cambiaron tus planes?</h2>
+                                    <div class="section-title-img">
+                                        <div class="round-ball"></div>
+                                    </div>
+                                </div>
+                                <span>Sabemos que te gustaria acompañarnos </span>
+                                <.simple_form
+                                    for={@form}
+                                    id="confirm-guest-form"
+                                    phx-change="validate"
+                                    phx-submit="save"
+                                >
+                                    <div class="wpo-section-title">
+                                    <p>Para:</p>
+                                    <h2><%= "#{@guest.name} #{@guest.last_name}" %></h2>
+                                    </div>
+                                    <.input field={@form[:adult_confirmed]} type="select" options={1..@guest.adult_max} label="Adultos" class="form-control" />
+                                    <div class="submit-area">
+                                            <button type="submit" class="theme-btn-s3">Enviar confirmación</button>
+                                          
+                                    </div>
+                                    <div class="submit-area">
+                                        <span class="link-form" phx-click={JS.push("reject")}>No podre asistir</span>
+                                    </div>
+                                </.simple_form>
+                            
+                                <div class="border-style"></div>
                             </div>
+                        <% end %>
+                        <div class="vector-1">
+                            <img src="/images/contact/1.png" alt="">
                         </div>
-                        <form method="post" class="contact-validation-active" id="contact-form-main">
-                            <div>
-                                <input type="text" class="form-control" name="name" id="name" placeholder="Name">
-                            </div>
-                            <div>
-                                <input type="email" class="form-control" name="email" id="email"
-                                    placeholder="Email">
-                            </div>
-                            <div>
-                                <input type="text" class="form-control" name="adress" id="adress"
-                                    placeholder="Adress">
-                            </div>
-                            <div>
-                                <select name="service" class="form-control">
-                                    <option disabled="disabled" selected>Services</option>
-                                    <option>Photography</option>
-                                    <option>The Rehearsal Dinner</option>
-                                    <option>The Afterparty</option>
-                                    <option>Videographers</option>
-                                    <option>Perfect Cake</option>
-                                    <option>All Of The Above</option>
-                                </select>
-                            </div>
-                            <div>
-                                <select name="guest" class="form-control">
-                                    <option disabled="disabled" selected>Number Of Guests</option>
-                                    <option>01</option>
-                                    <option>02</option>
-                                    <option>03</option>
-                                    <option>04</option>
-                                    <option>05</option>
-                                </select>
-                            </div>
-                            <div>
-                                <select name="meal" class="form-control last">
-                                    <option disabled="disabled" selected>Meal Preferences</option>
-                                    <option>Chicken Soup</option>
-                                    <option>Motton Kabab</option>
-                                    <option>Chicken BBQ</option>
-                                    <option>Mix Salad</option>
-                                    <option>Beef Ribs </option>
-                                </select>
-                            </div>
-                            <div class="submit-area">
-                                <button type="submit" class="theme-btn-s3">Send An Inquiry</button>
-                                <div id="c-loader">
-                                    <i class="ti-reload"></i>
-                                </div>
-                            </div>
-                            <div class="clearfix error-handling-messages">
-                                <div id="success">Thank you</div>
-                                <div id="error"> Error occurred while sending email. Please try again later.
-                                </div>
-                            </div>
-                        </form>
-                        <div class="border-style"></div>
-                    </div>
-                    <div class="vector-1">
-                        <img src="/images/contact/1.png" alt="">
-                    </div>
-                    <div class="vector-2">
-                        <img src="/images/contact/2.png" alt="">
+                        <div class="vector-2">
+                            <img src="/images/contact/2.png" alt="">
+                        </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+        <% else %>
+            <section class="wpo-contact-section section-padding " id="RSVP">
+                <div class="container">
+                    <div class="wpo-contact-section-wrapper">
+                        <div class="wpo-contact-form-area">
+                                <div class="wpo-section-title-s2">
+                                    <div class="section-title-simg">
+                                        <img src="/images/section-title2.png" alt="">
+                                    </div>
+                                    <h2>¡¡Invitacion invalida!!</h2>
+                                    <div class="section-title-img">
+                                        <div class="round-ball"></div>
+                                    </div>
+                                </div>
+                                <p>Si es un error, contacta a los novios para confirmar tu asistencia o para que te envien una invitacion valida </p>
+                                <a target="_blank" href="https://api.whatsapp.com/send?phone=529981681329&text=Hola tuve un error al intentar confirmar la asistencia a tu boda" class="theme-btn-s3">Contactar a los novios</a>
+                                <div class="border-style"></div>
+                            </div>
+                        <div class="vector-1">
+                            <img src="/images/contact/1.png" alt="">
+                        </div>
+                        <div class="vector-2">
+                            <img src="/images/contact/2.png" alt="">
+                        </div>
+                    </div>
+                </div>
+            </section>
+        <% end %>
         <!-- end of wpo-contact-section -->
 
 
         <!-- start wpo-cta-section -->
 
-        <div class="wpo-cta-section-s3">
+        <div class="wpo-cta-section-s3 bg-cover">
             <div class="conatiner-fluid">
                 <div class="wpo-cta-item">
                     <h2>Comienza la aventura</h2>
@@ -597,11 +634,9 @@
                                     <h3>Datos bancarios</h3>
                                     <p>Nombre: Jose Luis Vergara Soberanis.
                                     </p>
-                                    <p>Numero de cuenta: 123456666644445
+                                    <p>Cuenta CLABE: 6460 1120 6849 6547 83
                                     </p>
-                                    <p>Numero de Tarjeta: 1234 5666 6644 5445
-                                    </p>
-                                    <p>Banco: HSBC
+                                    <p>Banco: STP
                                     </p>
                                     
                                 </div>

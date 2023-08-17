@@ -14,6 +14,11 @@ defmodule FunEventsWeb.GuestLive.Index do
     {:noreply, apply_action(socket, socket.assigns.live_action, params)}
   end
 
+  @impl true
+  def handle_event("generate_message", %{"guest_id" => guest_id}, socket) do
+    {:noreply, socket}
+  end
+
   defp apply_action(socket, :edit, %{"id" => id}) do
     socket
     |> assign(:page_title, "Edit Guest")

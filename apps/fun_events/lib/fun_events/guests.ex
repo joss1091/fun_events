@@ -35,7 +35,7 @@ defmodule FunEvents.Guests do
       ** (Ecto.NoResultsError)
 
   """
-  def get_guest!(id), do: Repo.get!(Guest, id)
+  def get_guest!(id), do: Repo.get(Guest, id)
 
   @doc """
   Creates a guest.
@@ -73,6 +73,12 @@ defmodule FunEvents.Guests do
     |> Repo.update()
   end
 
+  def confirm_guest(%Guest{} = guest, attrs) do
+    guest
+    |> Guest.confirm_changeset(attrs)
+    |> Repo.update()
+  end
+
   @doc """
   Deletes a guest.
 
@@ -101,4 +107,12 @@ defmodule FunEvents.Guests do
   def change_guest(%Guest{} = guest, attrs \\ %{}) do
     Guest.changeset(guest, attrs)
   end
+
+
+  def generate_whatsapp_url(guest, message) do
+    "https://api.whatsapp.com/send?phone=52#{guest.phone}&text=#{message}"
+  end
+
+
+
 end

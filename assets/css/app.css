@@ -2,3 +2,15 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+.bg-cover{
+    background-size: cover!;
+}
+
+.swiper-slides {
+    height: auto;
+  }
+  
+  .swiper-wrapper {
+    position: relative;
+  }
+

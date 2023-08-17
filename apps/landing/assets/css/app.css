@@ -17,3 +17,27 @@
 @import "../vendor/css/style.css";
 
 /* This file is for your main application CSS */
+
+
+h2.ig-title {
+    font-size: 90px;
+    font-weight: 500;
+    color: #fff;
+  }
+  @media (max-width: 767px) {
+    h2.ig-title {
+      font-size: 40px;
+    }
+  }
+  @media (max-width: 575px) {
+    h2.ig-title {
+      font-size: 40px;
+    }
+  }
+
+.link-form {
+    color: #5880a2;
+    padding-bottom: 15px;
+    position: relative;
+    font-size: 16px;
+}

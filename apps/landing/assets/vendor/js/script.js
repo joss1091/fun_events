@@ -326,28 +326,45 @@ window.$ = jquery;
     });
 
 
+  // Fancybox Single Videos
+  if ($(".video-btn").length) {
+    $(".video-btn").fancybox({
+        
+        afterShow: function() {
+        // After the show-slide-animation has ended - play the video
+        console.log( this.content.find('video'))
+        this.content.find('video').trigger('play')
+        // Trigger fancybox.close() once the video has ended
+        this.content.find('video').on('ended', function() {
+            $.fancybox.close();
+        });
+        }
+        
+    });
+    }
+
 
     /*------------------------------------------
         = POPUP VIDEO
     -------------------------------------------*/
-    if ($(".video-btn").length) {
-        $(".video-btn").on("click", function(){
-            $.fancybox({
-                href: this.href,
-                type: $(this).data("type"),
-                'title'         : this.title,
-                helpers     : {
-                    title : { type : 'inside' },
-                    media : {}
-                },
+    // if ($(".video-btn").length) {
+    //     $(".video-btn").on("click", function(){
+    //         $.fancybox({
+    //             href: this.href,
+    //             type: $(this).data("type"),
+    //             'title'         : this.title,
+    //             helpers     : {
+    //                 title : { type : 'inside' },
+    //                 media : {}
+    //             },
 
-                beforeShow : function(){
-                    $(".fancybox-wrap").addClass("gallery-fancybox");
-                }
-            });
-            return false
-        });
-    }
+    //             beforeShow : function(){
+    //                 $(".fancybox-wrap").addClass("gallery-fancybox");
+    //             }
+    //         });
+    //         return false
+    //     });
+    // }
 
 
     /*------------------------------------------
@@ -827,13 +844,11 @@ window.$ = jquery;
     -------------------------------------------*/
     if ($("#clock").length) {
         $('#clock').countdown('2023/10/29', function(event) {
-            console.log(event)
             var $this = $(this).html(event.strftime(''
-            + '<div class="box"><div><div class="time">%m</div> <span>Month</span> </div></div>'
-            + '<div class="box"><div><div class="time">%D</div> <span>Days</span> </div></div>'
-            + '<div class="box"><div><div class="time">%H</div> <span>Hours</span> </div></div>'
-            + '<div class="box"><div><div class="time">%M</div> <span>Mins</span> </div></div>'
-            + '<div class="box"><div><div class="time">%S</div> <span>Secs</span> </div></div>'));
+            + '<div class="box"><div><div class="time">%D</div> <span>Dias</span> </div></div>'
+            + '<div class="box"><div><div class="time">%H</div> <span>Horas</span> </div></div>'
+            + '<div class="box"><div><div class="time">%M</div> <span>Minutos</span> </div></div>'
+            + '<div class="box"><div><div class="time">%S</div> <span>Segundos</span> </div></div>'));
         });
     }
 

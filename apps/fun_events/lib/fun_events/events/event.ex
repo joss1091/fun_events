@@ -3,7 +3,7 @@ defmodule FunEvents.Events.Event do
   import Ecto.Changeset
 
   schema "events" do
-    field :date, :date
+    field :date, :utc_datetime
     field :name, :string
     field :status, :string
     field :time_zone, :string
