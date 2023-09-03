@@ -16,6 +16,9 @@ defmodule FunEvents.Guests.Guest do
     field(:phone, :string)
     field(:country, :string, default: "MX")
     field(:token, :string)
+    field(:invite_url, :string)
+    field(:invite_url_short, :string)
+    field(:message, :string)
 
     timestamps()
   end
@@ -23,7 +26,7 @@ defmodule FunEvents.Guests.Guest do
   @doc false
   def changeset(guest, attrs) do
     guest
-    |> cast(attrs, [:name, :last_name, :adult_max, :minor_max, :adult_confirmed, :minor_confirmed, :date_response, :state, :last_notification_date, :event_id, :token])
+    |> cast(attrs, [:name, :last_name, :adult_max, :minor_max, :adult_confirmed, :minor_confirmed, :date_response, :phone,:state, :last_notification_date, :event_id, :token, :invite_url_short, :message])
     |> validate_required([:name, :last_name, :adult_max, :minor_max, :state, :phone, :country])
   end
 

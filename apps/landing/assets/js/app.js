@@ -28,6 +28,7 @@ import "../vendor/js/bootstrap.bundle.min"
 import "../vendor/js/script"
 window.jQuery = jquery;
 window.$ = jquery;
+import  Swal  from "../vendor/js/sweetlert2.min"
 
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToken}})
@@ -36,6 +37,26 @@ let liveSocket = new LiveSocket("/live", Socket, {params: {_csrf_token: csrfToke
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})
 window.addEventListener("phx:page-loading-start", _info => topbar.show(300))
 window.addEventListener("phx:page-loading-stop", _info => topbar.hide())
+
+
+window.addEventListener("phx:popup-alert", ({detail}) => {
+ 
+    if (detail.type == "success") {
+        Swal.fire({
+            icon: 'success',
+            title: detail.text,
+            showConfirmButton: false,
+            timer: 1500
+          })
+    }
+})
+
+window.addEventListener("phx:copy", (event) => {
+    let text = event.target.value; // Alternatively use an element or data tag!
+      navigator.clipboard.writeText(text).then(() => {
+        console.log("All done!"); // Or a nice tooltip or something.
+      })
+    })
 
 // connect if there are any LiveViews on the page
 liveSocket.connect()

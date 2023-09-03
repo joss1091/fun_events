@@ -26,8 +26,13 @@ defmodule Landing.EventLive.Index do
       guest_params
       |> Map.put("date_response", Timex.now())
       |> Map.put("state", "confirmed")
-    Guests.confirm_guest(socket.assigns.guest, guest_params)
-    {:noreply, socket |> put_flash(:info, "Se confirmo correctamente tu asistencia")}
+    with {:ok, guest} <- Guests.confirm_guest(socket.assigns.guest, guest_params) do
+      {:noreply,
+        socket
+        |> push_event("popup-alert", %{type: "success", text: "Se confirmo correctamente tu asistencia"})
+        |> assign(:guest, guest)
+    }
+    end
   end
 
   @impl true
@@ -38,20 +43,23 @@ defmodule Landing.EventLive.Index do
       |> Map.put("state", "confirmed")
       |> Map.put("adult_confirmed", 0)
     Guests.confirm_guest(socket.assigns.guest, guest_params)
-    {:noreply, socket |> put_flash(:info, "Se actualizo correctamente, que no podras asistir")}
+    {:noreply,
+      socket
+      |> push_event("popup-alert", %{type: "success", text: "Gracias por avisarnos que no podras asistir."})
+    }
   end
 
 
   defp apply_action(socket, :index, _params) do
     socket
-    |> assign(:page_title, "Boda de J&K")
+    |> assign(:page_title, "Boda de J&K | 29 de Octubre 2023 | Cancún, Mexico")
     |> assign(:event, nil)
   end
 
-  defp load_context(socket, %{"token" => token, "slug" => slug}) do
-    with {:ok, payload} <-  Phoenix.Token.verify(Landing.Endpoint, "ju7nHQeQCEIGe7W7vhHLm2YkhyiNil2Fo3fW4TaslkwBTytzzzNmphz9uocma/n0", token) |> IO.inspect do
-      guest = Guests.get_guest!(payload.id) |> IO.inspect
-      event = Events.get_event!(slug)
+  defp load_context(socket, %{"token" => token}) do
+    with {:ok, payload} <-  FunEvents.TokenEngine.validate(Phoenix.Token,token)  do
+      guest = Guests.get_guest!(payload.id)
+      event = Events.get_event!(1)
       chnageset = Guests.change_guest(guest || %Guest{})
       socket
       |> assign(:guest, guest)
@@ -59,7 +67,7 @@ defmodule Landing.EventLive.Index do
       |> assign(:form, to_form(chnageset))
     else
     _ ->
-      event = Events.get_event!(slug)
+      event = Events.get_event!(1)
       chnageset = Guests.change_guest( %Guest{})
       socket
       |> assign(:guest, nil)
@@ -70,8 +78,8 @@ defmodule Landing.EventLive.Index do
 
   end
 
-  defp load_context(socket, %{ "slug" => slug}) do
-    event = Events.get_event!(slug)
+  defp load_context(socket, _params) do
+    event = Events.get_event!(1)
     chnageset = Guests.change_guest(%Guest{})
     socket
     |> assign(:guest, nil)

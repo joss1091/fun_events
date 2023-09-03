@@ -20,14 +20,13 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
         phx-change="validate"
         phx-submit="save"
       >
-        <.input field={@form[:name]} type="text" label="Name" />
-        <.input field={@form[:last_name]} type="text" label="Last name" />
-        <.input field={@form[:adult_max]} type="number" label="Adult max" />
-        <.input field={@form[:minor_max]} type="number" label="Minor max" />
-        <.input field={@form[:phone]} type="text" label="Minor max" />
-        <.input field={@form[:state]} type="text" label="Minor max" />
+        <.input field={@form[:name]} type="text" label="Nombre" />
+        <.input field={@form[:last_name]} type="text" label="Apellido" />
+        <.input field={@form[:adult_max]} type="number" label="Adultos maximo" />
+        <.input field={@form[:minor_max]} type="number" label="Menor maximo" />
+        <.input field={@form[:phone]} type="text" label="Telefono" />
         <:actions>
-          <.button phx-disable-with="Saving...">Save Guest</.button>
+          <.button phx-disable-with="Guardar...">Guardar</.button>
         </:actions>
       </.simple_form>
     </div>
@@ -74,7 +73,7 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
   end
 
   defp save_guest(socket, :new, guest_params) do
-    case Guests.create_guest(guest_params) do
+    case Guests.create_guest(guest_params, &after_create_guest/1) do
       {:ok, guest} ->
         notify_parent({:saved, guest})
 
@@ -94,7 +93,10 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
 
   defp notify_parent(msg), do: send(self(), {__MODULE__, msg})
 
-  def generate_token(%Guest{} = guest) do
-    Phoenix.Token.sign(Landing.Endpoint, "ju7nHQeQCEIGe7W7vhHLm2YkhyiNil2Fo3fW4TaslkwBTytzzzNmphz9uocma/n0", %{id: 1}, max_age: 86400 * 80)
+  defp after_create_guest(guest) do
+    FunEvents.TokenEngine.generate_token(Phoenix.Token, guest)
   end
+
 end
+# pk_MC2VfYGts9q1N8tX api key short.io
+# sk_zt9XtRcPCkTsxSWW

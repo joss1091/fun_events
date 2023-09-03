@@ -552,6 +552,7 @@
                                         <div class="round-ball"></div>
                                     </div>
                                 </div>
+                                <span>Necesitamos que nos confirmes tu asistencia porque hay que organizar muchas cosas </span>
                                 <.simple_form
                                     for={@form}
                                     id="confirm-guest-form"
@@ -565,10 +566,11 @@
                                     <.input field={@form[:adult_confirmed]} type="select" options={1..@guest.adult_max} label="Adultos" class="form-control" />
                                     <div class="submit-area">
                                             <button type="submit" class="theme-btn-s3">Enviar confirmación</button>
-                                            <div id="c-loader">
-                                                <i class="ti-reload"></i>
-                                            </div>
+                                            
                                         </div>
+                                        <div class="submit-area">
+                                        
+                                    </div>
                                 </.simple_form>
                             
                                 <div class="border-style"></div>
@@ -584,7 +586,7 @@
                                         <div class="round-ball"></div>
                                     </div>
                                 </div>
-                                <span>Sabemos que te gustaria acompañarnos </span>
+                                <span>Sabemos que te gustaria acompañarnos, pero es importante que nos avises si te surgio un imprevisto y no podras acompañarnos. </span>
                                 <.simple_form
                                     for={@form}
                                     id="confirm-guest-form"
@@ -595,14 +597,12 @@
                                     <p>Para:</p>
                                     <h2><%= "#{@guest.name} #{@guest.last_name}" %></h2>
                                     </div>
-                                    <.input field={@form[:adult_confirmed]} type="select" options={1..@guest.adult_max} label="Adultos" class="form-control" />
+                                    <.input field={@form[:adult_confirmed]} type="select" options={0..@guest.adult_max} label="Adultos" class="form-control" />
                                     <div class="submit-area">
                                             <button type="submit" class="theme-btn-s3">Enviar confirmación</button>
                                           
                                     </div>
-                                    <div class="submit-area">
-                                        <span class="link-form" phx-click={JS.push("reject")}>No podre asistir</span>
-                                    </div>
+                                    
                                 </.simple_form>
                             
                                 <div class="border-style"></div>

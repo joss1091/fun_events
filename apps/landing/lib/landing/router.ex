@@ -17,7 +17,7 @@ defmodule Landing.Router do
   scope "/", Landing do
     pipe_through :browser
 
-    live "/:slug", EventLive.Index, :index
+    live "/", EventLive.Index, :index
   end
 
   # Other scopes may use custom stacks.
