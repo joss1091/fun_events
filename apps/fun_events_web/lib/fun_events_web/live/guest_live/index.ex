@@ -17,8 +17,10 @@ defmodule FunEventsWeb.GuestLive.Index do
   @impl true
   def handle_event("send_message", %{"guest_id" => guest_id}, socket) do
     guest = Guests.get_guest!(guest_id)
-    with {:ok, response} <-  FunEvents.WhatsappHandler.build_and_send(guest) do
-      {:noreply, socket |> put_flash(:info, "Se envio correctamente el mensaje") }
+    with {:ok, response} <-  FunEvents.WhatsappHandler.build_and_send(guest),
+    {:ok, attrs} <- {:ok, %{ last_notification_date: Timex.now()}},
+    {:ok, guest} <- Guests.update_guest(guest, attrs) do
+      {:noreply, socket |> put_flash(:info, "Se envio correctamente el mensaje") |> assign(:guest, guest)}
     else
       error ->
         IO.inspect(error)

@@ -563,7 +563,7 @@
                                     <p>Para:</p>
                                     <h2><%= "#{@guest.name} #{@guest.last_name}" %></h2>
                                     </div>
-                                    <.input field={@form[:adult_confirmed]} type="select" options={1..@guest.adult_max} label="Adultos" class="form-control" />
+                                    <.input field={@form[:adult_confirmed]} type="select" options={0..@guest.adult_max} label="Adultos" class="form-control" />
                                     <div class="submit-area">
                                             <button type="submit" class="theme-btn-s3">Enviar confirmación</button>
                                             
