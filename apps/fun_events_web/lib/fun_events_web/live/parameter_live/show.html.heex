@@ -1,0 +1,29 @@
+<.header>
+  Parameter <%= @parameter.id %>
+  <:subtitle>This is a parameter record from your database.</:subtitle>
+  <:actions>
+    <.link patch={~p"/parameters/#{@parameter}/show/edit"} phx-click={JS.push_focus()}>
+      <.button>Edit parameter</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @parameter.name %></:item>
+  <:item title="Value"><%= @parameter.value %></:item>
+  <:item title="Resource"><%= @parameter.resource_id %></:item>
+  <:item title="Resource type"><%= @parameter.resource_type %></:item>
+</.list>
+
+<.back navigate={~p"/parameters"}>Back to parameters</.back>
+
+<.modal :if={@live_action == :edit} id="parameter-modal" show on_cancel={JS.patch(~p"/parameters/#{@parameter}")}>
+  <.live_component
+    module={FunEventsWeb.ParameterLive.FormComponent}
+    id={@parameter.id}
+    title={@page_title}
+    action={@live_action}
+    parameter={@parameter}
+    patch={~p"/parameters/#{@parameter}"}
+  />
+</.modal>

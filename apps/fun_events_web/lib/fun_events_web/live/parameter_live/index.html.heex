@@ -1,0 +1,44 @@
+<.header>
+  Listing Parameters
+  <:actions>
+    <.link patch={~p"/parameters/new"}>
+      <.button>New Parameter</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table
+  id="parameters"
+  rows={@streams.parameters}
+  row_click={fn {_id, parameter} -> JS.navigate(~p"/parameters/#{parameter}") end}
+>
+  <:col :let={{_id, parameter}} label="Name"><%= parameter.name %></:col>
+  <:col :let={{_id, parameter}} label="Value"><%= parameter.value %></:col>
+  <:col :let={{_id, parameter}} label="Resource"><%= parameter.resource_id %></:col>
+  <:col :let={{_id, parameter}} label="Resource type"><%= parameter.resource_type %></:col>
+  <:action :let={{_id, parameter}}>
+    <div class="sr-only">
+      <.link navigate={~p"/parameters/#{parameter}"}>Show</.link>
+    </div>
+    <.link patch={~p"/parameters/#{parameter}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={{id, parameter}}>
+    <.link
+      phx-click={JS.push("delete", value: %{id: parameter.id}) |> hide("##{id}")}
+      data-confirm="Are you sure?"
+    >
+      Delete
+    </.link>
+  </:action>
+</.table>
+
+<.modal :if={@live_action in [:new, :edit]} id="parameter-modal" show on_cancel={JS.patch(~p"/parameters")}>
+  <.live_component
+    module={FunEventsWeb.ParameterLive.FormComponent}
+    id={@parameter.id || :new}
+    title={@page_title}
+    action={@live_action}
+    parameter={@parameter}
+    patch={~p"/parameters"}
+  />
+</.modal>

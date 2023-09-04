@@ -15,8 +15,16 @@ defmodule FunEventsWeb.GuestLive.Index do
   end
 
   @impl true
-  def handle_event("generate_message", %{"guest_id" => guest_id}, socket) do
-    {:noreply, socket}
+  def handle_event("send_message", %{"guest_id" => guest_id}, socket) do
+    guest = Guests.get_guest!(guest_id)
+    with {:ok, response} <-  FunEvents.WhatsappHandler.build_and_send(guest) do
+      {:noreply, socket |> put_flash(:info, "Se envio correctamente el mensaje") }
+    else
+      error ->
+        IO.inspect(error)
+        {:noreply, socket |> put_flash(:info, "No se envio correctamente el mensaje") }
+    end
+
   end
 
   defp apply_action(socket, :edit, %{"id" => id}) do
@@ -24,6 +32,8 @@ defmodule FunEventsWeb.GuestLive.Index do
     |> assign(:page_title, "Edit Guest")
     |> assign(:guest, Guests.get_guest!(id))
   end
+
+
 
   defp apply_action(socket, :new, _params) do
     socket

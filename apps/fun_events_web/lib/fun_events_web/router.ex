@@ -98,6 +98,13 @@ defmodule FunEventsWeb.Router do
 
       live "/guest_notification_configs/:id", GuesNotificationConfigLive.Show, :show
       live "/guest_notification_configs/:id/show/edit", GuesNotificationConfigLive.Show, :edit
+
+      live "/parameters", ParameterLive.Index, :index
+      live "/parameters/new", ParameterLive.Index, :new
+      live "/parameters/:id/edit", ParameterLive.Index, :edit
+
+      live "/parameters/:id", ParameterLive.Show, :show
+      live "/parameters/:id/show/edit", ParameterLive.Show, :edit
     end
   end
 

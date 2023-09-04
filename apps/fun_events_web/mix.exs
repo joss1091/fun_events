@@ -50,7 +50,8 @@ defmodule FunEventsWeb.MixProject do
       {:gettext, "~> 0.20"},
       {:fun_events, in_umbrella: true},
       {:jason, "~> 1.2"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:fun_events, in_umbrella: true}
     ]
   end
 

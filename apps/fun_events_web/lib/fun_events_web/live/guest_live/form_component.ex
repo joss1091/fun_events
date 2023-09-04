@@ -54,7 +54,7 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
   end
 
   def handle_event("save", %{"guest" => guest_params}, socket) do
-    save_guest(socket, socket.assigns.action, guest_params)
+    save_guest(socket, socket.assigns.action, guest_params |> Map.put("event_id", 1))
   end
 
   defp save_guest(socket, :edit, guest_params) do

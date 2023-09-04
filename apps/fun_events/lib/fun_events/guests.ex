@@ -65,9 +65,8 @@ defmodule FunEvents.Guests do
   defp after_create_guest({:ok, guest},function) do
     with {:ok, token} <- {:ok, function.(guest)},
     {:ok, guest} <- Guest.changeset(guest,%{token: token} ) |> Repo.update(),
-    {:ok, short_url} <- FunEvents.ShortUrl.create_short_url(guest),
-    {:ok, message} <- {:ok, FunEvents.MessageBuilder.build(%{guest | invite_url_short: short_url})} do
-      Guest.changeset(guest,%{invite_url_short: short_url, message: message}) |> Repo.update()
+    {:ok, short_url} <- FunEvents.ShortUrl.create_short_url(guest) do
+      Guest.changeset(guest,%{invite_url_short: short_url}) |> Repo.update()
     end
 
   end

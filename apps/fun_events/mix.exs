@@ -43,7 +43,8 @@ defmodule FunEvents.MixProject do
       {:jason, "~> 1.2"},
       {:swoosh, "~> 1.3"},
       {:finch, "~> 0.13"},
-      {:httpoison, "~> 2.0"}
+      {:httpoison, "~> 2.0"},
+      {:countries, "~> 1.6"}
     ]
   end
 
