@@ -5,6 +5,7 @@ defmodule FunEvents.WhatsappHandler do
   def build_and_send(guests) when is_list(guests) do
     guests
     |> filter_disabled_send_message()
+    |> remove_invalid_guests()
     |> Enum.map(&build_and_send/1)
 
   end
@@ -22,10 +23,20 @@ defmodule FunEvents.WhatsappHandler do
 
   end
 
+  defp remove_invalid_guests(guests) do
+    guests
+    |> Enum.reject(&(is_nil(&1.guest.invite_url_short)))
+    |> Enum.reject(&(is_nil(&1.guest.adult_max )))
+    |> Enum.reject(&(is_nil(&1.guest.phone )))
+    |> Enum.filter(&(is_nil(&1.guest.last_notification_date )))
+    |> Enum.filter(&(is_nil(&1.guest.date_response )))
+  end
+
   defp send_message(guest, message) do
     message.value["text"]
     |> String.replace("${family_name}", "#{guest.name} #{guest.last_name}" |> String.upcase())
     |> String.replace("${invitation_link}", guest.invite_url_short)
+    |> String.replace("${adult_quantity}", "#{guest.adult_max}")
     |> send_whatsapp(guest)
     |> handle_response()
   end

@@ -4,6 +4,7 @@
     <.link patch={~p"/events/#{@event_id}/guests/new"}>
       <.button>New Guest</.button>
     </.link>
+    <.button phx-click={JS.push("send_message_bulk")}>Enviar mensajes masivo</.button>
   </:actions>
 </.header>
 

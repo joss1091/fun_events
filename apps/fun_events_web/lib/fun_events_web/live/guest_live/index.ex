@@ -29,6 +29,13 @@ defmodule FunEventsWeb.GuestLive.Index do
 
   end
 
+  @impl true
+  def handle_event("send_message_bulk", _, socket) do
+    guests = Guests.list_guests()
+    FunEvents.WhatsappHandler.build_and_send(guests)
+    {:noreply, socket |> put_flash(:info, "Se estan enviando los mensajes masivamente")}
+  end
+
   defp apply_action(socket, :edit, %{"id" => id, "event_id" => event_id}) do
     socket
     |> assign(:page_title, "Editar Invitado")
