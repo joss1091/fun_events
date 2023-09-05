@@ -25,11 +25,11 @@ defmodule FunEvents.WhatsappHandler do
 
   defp remove_invalid_guests(guests) do
     guests
-    |> Enum.reject(&(is_nil(&1.guest.invite_url_short)))
-    |> Enum.reject(&(is_nil(&1.guest.adult_max )))
-    |> Enum.reject(&(is_nil(&1.guest.phone )))
-    |> Enum.filter(&(is_nil(&1.guest.last_notification_date )))
-    |> Enum.filter(&(is_nil(&1.guest.date_response )))
+    |> Enum.reject(&(is_nil(&1.invite_url_short)))
+    |> Enum.reject(&(is_nil(&1.adult_max )))
+    |> Enum.reject(&(is_nil(&1.phone )))
+    |> Enum.filter(&(is_nil(&1.last_notification_date )))
+    |> Enum.filter(&(is_nil(&1.date_response )))
   end
 
   defp send_message(guest, message) do
