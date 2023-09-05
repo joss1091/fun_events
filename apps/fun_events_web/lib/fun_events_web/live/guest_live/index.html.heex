@@ -1,7 +1,7 @@
 <.header>
   Listing Guests
   <:actions>
-    <.link patch={~p"/guests/new"}>
+    <.link patch={~p"/events/#{@event_id}/guests/new"}>
       <.button>New Guest</.button>
     </.link>
   </:actions>
@@ -10,22 +10,21 @@
 <.table
   id="guests"
   rows={@streams.guests}
-  row_click={fn {_id, guest} -> JS.navigate(~p"/guests/#{guest}") end}
+  row_click={fn {_id, guest} -> JS.navigate(~p"/events/#{@event_id}/guests/#{guest}") end}
 >
-  <:col :let={{_id, guest}} label="Name"><%= guest.name %></:col>
-  <:col :let={{_id, guest}} label="Last name"><%= guest.last_name %></:col>
-  <:col :let={{_id, guest}} label="Adult max"><%= guest.adult_max %></:col>
-  <:col :let={{_id, guest}} label="Minor max"><%= guest.minor_max %></:col>
-  <:col :let={{_id, guest}} label="Adult confirmed"><%= guest.adult_confirmed %></:col>
-  <:col :let={{_id, guest}} label="Date response"><%= guest.date_response %></:col>
-  <:col :let={{_id, guest}} label="State"><%= guest.state %></:col>
-  <:col :let={{_id, guest}} label="Last notification date"><%= guest.last_notification_date %></:col>
-  <:col :let={{_id, guest}} label="Event"><%= guest.event_id %></:col>
+  <:col :let={{_id, guest}} label="Nombre"><%= guest.name %></:col>
+  <:col :let={{_id, guest}} label="Apellido"><%= guest.last_name %></:col>
+  <:col :let={{_id, guest}} label="Adultos Maximo"><%= guest.adult_max %></:col>
+  <:col :let={{_id, guest}} label="Adultos confirmados"><%= guest.adult_confirmed %></:col>
+  <:col :let={{_id, guest}} label="Fecha de confirmacion"><%= guest.date_response %></:col>
+  <:col :let={{_id, guest}} label="Estado"><%= guest.state %></:col>
+  <:col :let={{_id, guest}} label="enviar invitacion"><%= guest.send_notification %></:col>
+  <:col :let={{_id, guest}} label="Fecha de notificacion"><%= guest.last_notification_date %></:col>
   <:action :let={{_id, guest}}>
     <div class="sr-only">
-      <.link navigate={~p"/guests/#{guest}"}>Show</.link>
+      <.link navigate={~p"/events/#{@event_id}/guests/#{guest}"}>Ver</.link>
     </div>
-    <.link patch={~p"/guests/#{guest}/edit"}>Edit</.link>
+    <.link patch={~p"/events/#{@event_id}/guests/#{guest}/edit"}>Editar</.link>
   </:action>
   <:action :let={{id, guest}}>
     <.link
@@ -37,13 +36,14 @@
   </:action>
 </.table>
 
-<.modal :if={@live_action in [:new, :edit]} id="guest-modal" show on_cancel={JS.patch(~p"/guests")}>
+<.modal :if={@live_action in [:new, :edit]} id="guest-modal" show on_cancel={JS.patch(~p"/events/#{@event_id}/guests")}>
   <.live_component
     module={FunEventsWeb.GuestLive.FormComponent}
     id={@guest.id || :new}
     title={@page_title}
     action={@live_action}
     guest={@guest}
-    patch={~p"/guests"}
+    event_id={@event_id}
+    patch={~p"/events/#{@event_id}/guests"}
   />
 </.modal>

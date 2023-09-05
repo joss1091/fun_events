@@ -78,12 +78,12 @@ defmodule FunEventsWeb.Router do
       live "/events/:id", EventLive.Show, :show
       live "/events/:id/show/edit", EventLive.Show, :edit
 
-      live "/guests", GuestLive.Index, :index
-      live "/guests/new", GuestLive.Index, :new
-      live "/guests/:id/edit", GuestLive.Index, :edit
+      live "/events/:event_id/guests", GuestLive.Index, :index
+      live "/events/:event_id/guests/new", GuestLive.Index, :new
+      live "/events/:event_id/guests/:id/edit", GuestLive.Index, :edit
 
-      live "/guests/:id", GuestLive.Show, :show
-      live "/guests/:id/show/edit", GuestLive.Show, :edit
+      live "/events/:event_id/guests/:id", GuestLive.Show, :show
+      live "/events/:event_id/guests/:id/show/edit", GuestLive.Show, :edit
 
       live "/notification", NotificationLoggerLive.Index, :index
       live "/notification/new", NotificationLoggerLive.Index, :new

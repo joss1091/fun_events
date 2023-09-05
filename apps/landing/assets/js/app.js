@@ -16,6 +16,7 @@
 //
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
+
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
@@ -58,6 +59,38 @@ window.addEventListener("phx:copy", (event) => {
       })
     })
 
+// window.addEventListener('phoenix.link.click', function (e) {
+//       var message = e.target.getAttribute("data-confirmation");
+//       var confirmed = e.target.getAttribute("data-confirmed");
+//       e.target.removeAttribute("data-confirmed");
+//       var x = e
+    
+
+//       if(message) {
+//         var new_event = new e.constructor(e.type, e)
+//         e.preventDefault();
+//         x.target.dispatchEvent(new_event)
+//         // Swal.fire({
+//         //   title: 'Are you sure?',
+//         //   text: "You won't be able to revert this!",
+//         //   icon: 'warning',
+//         //   showCancelButton: true,
+//         //   confirmButtonColor: '#3085d6',
+//         //   cancelButtonColor: '#d33',
+//         //   confirmButtonText: 'Yes, delete it!'
+//         // }).then((result) => {
+//         //   if (result.isConfirmed) {
+//         //     e.target.setAttribute("data-confirmed", true)
+//         //     console.log(e, "new event")
+//         //     console.log(e.target.dispatchEvent(e), "3333")
+//         //     return false
+//         //   }
+//         // })
+        
+        
+//       }
+//     }, false);
+// window.confirm
 // connect if there are any LiveViews on the page
 liveSocket.connect()
 

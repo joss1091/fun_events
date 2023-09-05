@@ -25,6 +25,9 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
         <.input field={@form[:adult_max]} type="number" label="Adultos maximo" />
         <.input field={@form[:minor_max]} type="number" label="Menor maximo" />
         <.input field={@form[:phone]} type="text" label="Telefono" />
+        <.input field={@form[:send_notification]} type="checkbox" label="Enviar notificacion" />
+        <.input field={@form[:send_custom_message]} type="checkbox" label="Enviar mensaje custom" />
+        <.input field={@form[:event_id]} value={@event_id} type="hidden"  />
         <:actions>
           <.button phx-disable-with="Guardar...">Guardar</.button>
         </:actions>
@@ -45,16 +48,18 @@ defmodule FunEventsWeb.GuestLive.FormComponent do
 
   @impl true
   def handle_event("validate", %{"guest" => guest_params}, socket) do
+
     changeset =
       socket.assigns.guest
       |> Guests.change_guest(guest_params)
       |> Map.put(:action, :validate)
+      |> IO.inspect
 
     {:noreply, assign_form(socket, changeset)}
   end
 
   def handle_event("save", %{"guest" => guest_params}, socket) do
-    save_guest(socket, socket.assigns.action, guest_params |> Map.put("event_id", 1))
+    save_guest(socket, socket.assigns.action, guest_params )
   end
 
   defp save_guest(socket, :edit, guest_params) do

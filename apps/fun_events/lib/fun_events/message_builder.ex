@@ -2,17 +2,49 @@ defmodule FunEvents.WhatsappHandler do
 
 
 
+  def build_and_send(guests) when is_list(guests) do
+    guests
+    |> filter_disabled_send_message()
+    |> Enum.map(&build_and_send/1)
+
+  end
 
   def build_and_send(guest) do
     with {:ok, _} <- validate_country(guest) ,
     {:ok, _} <- validate_phone(guest) do
       message = FunEvents.Parameters.get_parameter_by_type("message", "#{guest.event_id}", "event")
-      message.value["text"]
-      |> String.replace("${invitation_link}", guest.invite_url_short)
-      |> send_whatsapp(guest)
-      |> handle_response()
+      with {:ok, res} <- send_message(guest,message) ,
+      {:ok, _ } <- send_custom_message(guest) do
+
+        {:ok, res}
+      end
     end
 
+  end
+
+  defp send_message(guest, message) do
+    message.value["text"]
+    |> String.replace("${family_name}", "#{guest.name} #{guest.last_name}" |> String.upcase())
+    |> String.replace("${invitation_link}", guest.invite_url_short)
+    |> send_whatsapp(guest)
+    |> handle_response()
+  end
+
+  defp send_custom_message(guest) do
+    if guest.send_custom_message do
+
+      message = FunEvents.Parameters.get_parameter_by_type("custom_message", "#{guest.event_id}", "event")
+      message.value["text"]
+      |> send_whatsapp(guest)
+      |> handle_response()
+    else
+      {:ok, guest}
+    end
+  end
+
+  defp filter_disabled_send_message(guests) do
+    guests
+    |> Enum.filter(&(&1.send_notification))
   end
 
   defp send_whatsapp(content, guest) do

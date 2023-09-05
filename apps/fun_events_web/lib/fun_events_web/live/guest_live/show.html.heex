@@ -19,9 +19,11 @@
   <:item title="State"><%= @guest.state %></:item>
   <:item title="Last notification date"><%= @guest.last_notification_date %></:item>
   <:item title="Event"><%= @guest.event_id %></:item>
+  <:item title="Telefono"><%= @guest.phone %></:item>
+  <:item title="Pais"><%= @guest.country %></:item>
 </.list>
 
-<.back navigate={~p"/guests"}>Back to guests</.back>
+<.back navigate={~p"/events/#{@guest.event_id}/guests"}>Back to guests</.back>
 
 <.modal :if={@live_action == :edit} id="guest-modal" show on_cancel={JS.patch(~p"/guests/#{@guest}")}>
   <.live_component

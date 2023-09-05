@@ -29,24 +29,27 @@ defmodule FunEventsWeb.GuestLive.Index do
 
   end
 
-  defp apply_action(socket, :edit, %{"id" => id}) do
+  defp apply_action(socket, :edit, %{"id" => id, "event_id" => event_id}) do
     socket
-    |> assign(:page_title, "Edit Guest")
+    |> assign(:page_title, "Editar Invitado")
     |> assign(:guest, Guests.get_guest!(id))
+    |> assign(:event_id, event_id)
   end
 
 
 
-  defp apply_action(socket, :new, _params) do
+  defp apply_action(socket, :new, %{"event_id" => event_id}) do
     socket
-    |> assign(:page_title, "New Guest")
-    |> assign(:guest, %Guest{})
+    |> assign(:page_title, "Nuevo invitado")
+    |> assign(:guest, %Guest{event_id: event_id})
+    |> assign(:event_id, event_id)
   end
 
-  defp apply_action(socket, :index, _params) do
+  defp apply_action(socket, :index, %{"event_id" => event_id}) do
     socket
-    |> assign(:page_title, "Listing Guests")
+    |> assign(:page_title, "Listado de invitados")
     |> assign(:guest, nil)
+    |> assign(:event_id, event_id)
   end
 
   @impl true

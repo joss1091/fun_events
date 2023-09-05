@@ -19,6 +19,11 @@ defmodule Landing.EventLive.Index do
   def handle_event("validate", _, socket) do
     {:noreply, socket}
   end
+  @impl true
+  def handle_event("test", _, socket) do
+    IO.inspect("jjj")
+    {:noreply, socket}
+  end
 
   @impl true
   def handle_event("save", %{"guest" => guest_params}, socket) do
